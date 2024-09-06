@@ -8,6 +8,10 @@ import Icon3Titles from '@/components/Libs/Icon3Titles';
 import css from './css.module.css';
 import './css.module.css'
 import WindowFloat from '../Libs/WindowFloat';
+import { Block } from './Block';
+
+
+
 
 export default p => Component(p, Page);
 const Page: PageEl = (props, state, refresh, getProps) => {
@@ -70,6 +74,27 @@ const Page: PageEl = (props, state, refresh, getProps) => {
             {(state.book.pages as number).toLocaleString("fa-IR")}
           </f-15>
         </f-c>
+
+
+        <g-b style={{ backgroundColor: "BlueViolet" }} onClick={() => {
+          if (!state.faves) {
+            state.faves = []
+          }
+          state.faves.push(state.book.title)
+          state.form = null
+          refresh()
+        }}>
+
+          <img src="https://cdn.ituring.ir/research/39/ubookshop/heart-rate-icon.png"
+            style={{ height: 20, width: 20, objectFit: "contain" }} />
+
+        </g-b>
+
+
+
+
+
+
       </WindowFloat> : null}
 
       <Window title={name}
@@ -78,15 +103,10 @@ const Page: PageEl = (props, state, refresh, getProps) => {
 
         <w-cse style={{}}>
           {props.books.map(book => {
-            return <img
-              className={global.styles.hoverzoom_nofade}
-              src={book.imageLink}
-              style={{ width: 150, height: 200, objectFit: "fill", flex: 1, minWidth: 150 }}
-              onClick={() => {
-                state.form = "bookspecs"
-                state.book = book
-                refresh()
-              }} />
+            return <Block
+              book={book}
+              state={state}
+              refresh={refresh} />
           })}
         </w-cse>
       </Window>
